@@ -5,8 +5,16 @@ function setup() {
   createCanvas(500, 500);
   // Set Color of Background
   clear();
+  var constraints = {
+    audio: false,
+    video: {
+      facingMode: {
+        exact: "environment",
+      },
+    },
+  };
   // Capture Video
-  capture = createCapture(VIDEO);
+  capture = createCapture(constraints);
   capture.size(320, 240);
   capture.hide();
   // Set Title Text and location of bottom left corner
