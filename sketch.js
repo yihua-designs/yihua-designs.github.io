@@ -15,7 +15,7 @@ function setup() {
   };
   // Capture Video
   capture = createCapture(constraints);
-  capture.size(width / 2, height / 2);
+  capture.size(width / 2.25, height / 2);
   console.log(capture.width);
   console.log(capture.height);
   capture.hide();
