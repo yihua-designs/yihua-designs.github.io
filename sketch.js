@@ -15,7 +15,9 @@ function setup() {
   };
   // Capture Video
   capture = createCapture(constraints);
-  //capture.size(width / 2, height / 2, 100, 100);
+  capture.size(width / 1.4, height / 2);
+  console.log(capture.width);
+  console.log(capture.height);
   capture.hide();
   // Set Title Text and location of bottom left corner
   let txt = createDiv("How Does My Pet See?");
