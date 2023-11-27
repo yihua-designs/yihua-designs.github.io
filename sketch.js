@@ -2,7 +2,7 @@ var capture;
 var currentFilter;
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(1000, 1000);
   // Set Color of Background
   clear();
   var constraints = {
@@ -15,7 +15,7 @@ function setup() {
   };
   // Capture Video
   capture = createCapture(constraints);
-  capture.size(320, 240);
+  capture.size(640, 480);
   capture.hide();
   // Set Title Text and location of bottom left corner
   let txt = createDiv("How Does My Pet See?");
@@ -46,8 +46,12 @@ function setup() {
 }
 
 function draw() {
-  image(capture, 100, 100, 320, 240);
+  if (currentFilter == 0) {
+    image(capture, 100, 100, 640, 480);
+  }
+  // Dog Filter
   if (currentFilter == 1) {
+    image(capture, 100, 100, 320, 240);
     loadPixels();
     for (var y = 0; y < height * 3; y++) {
       for (var x = 0; x < width; x++) {
@@ -65,7 +69,9 @@ function draw() {
       }
     }
     updatePixels();
+    // Bird Filter
   } else if (currentFilter == 2) {
+    image(capture, 100, 100, 320, 240);
     loadPixels();
     for (var y = 0; y < height * 3; y++) {
       for (var x = 0; x < width; x++) {
@@ -82,19 +88,34 @@ function draw() {
       }
     }
     updatePixels();
+    // Fish Filter
   } else if (currentFilter == 3) {
+    let img = capture.get();
     loadPixels();
-    for (var y = 0; y < height * 3; y++) {
-      for (var x = 0; x < width; x++) {
-        var index = (x + y * width) * 4;
-        var r = pixels[index + 0];
-        var g = pixels[index + 1];
-        var b = pixels[index + 2];
-        var a = pixels[index + 3];
-
-        pixels[index + 0] = 255 - r;
-        pixels[index + 1] = 255 - g;
-        pixels[index + 2] = 255 - b;
+    let x = 225;
+    let y = 200;
+    var lsize = 50,
+      lsize2 = lsize * lsize;
+    var mag = 2.0;
+    var k = -0.00016;
+    var u, v, r2;
+    for (var vd = -lsize; vd < lsize; vd++) {
+      for (var ud = -lsize; ud < lsize; ud++) {
+        r2 = ud * ud + vd * vd;
+        if (r2 <= lsize2) {
+          var f = mag + k * r2;
+          u = floor(ud / f) + x;
+          v = floor(vd / f) + y;
+          var px = ud + x;
+          var py = vd + y;
+          if (px >= 0 && px < width && py >= 0 && py < height) {
+            if (u >= 0 && u < img.width && v >= 0 && v < img.height) {
+              set(ud + x, vd + y, img.get(u, v));
+            } else {
+              set(ud + x, vd + y);
+            }
+          }
+        }
       }
     }
     updatePixels();
