@@ -21,29 +21,32 @@ function setup() {
   capture.hide();
   // Set Title Text and location of bottom left corner
   let txt = createDiv("How Does My Pet See?");
-  txt.position(200, 15);
+  txt.style("font-size", "48px");
+  txt.position(width / 2 - 210, 15);
+  console.log(txt.width);
+
   // Create Reset button
   buttonReset = createButton("Back to Beginning");
   // Set Reset button bottom left corner
-  buttonReset.position(210, 35);
+  buttonReset.position(width / 2, 35);
   // Set what happens when you press reset button
   buttonReset.mousePressed(changeBack);
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.position(width / 2 - 400, 700);
+  buttonDog.position(width / 2 - 400, height / 2 + 250);
   buttonDog.size(200, 100);
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
-  buttonBird.position(width / 2 - 100, 700);
   buttonBird.size(200, 100);
+  buttonBird.position(width / 2 - 100, height / 2 + 250);
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
-  buttonFish.position(width / 2 + 200, 700);
+  buttonFish.position(width / 2 + 200, height / 2 + 250);
   buttonFish.size(200, 100);
   buttonFish.mousePressed(changeFish);
 
