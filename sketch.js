@@ -22,7 +22,8 @@ function setup() {
   // Set Title Text and location of bottom left corner
   let txt = createDiv("How Does My Pet See?");
   txt.style("font-size", "48px");
-  txt.position(width / 2 - 210, 15);
+  var textbody = txt.width / 8;
+  txt.position(width / 2 - textbody, 15);
   console.log(txt.width);
 
   // Create Reset button
