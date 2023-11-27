@@ -15,7 +15,7 @@ function setup() {
   };
   // Capture Video
   capture = createCapture(constraints);
-  capture.size(640, 480);
+  capture.size(960, 720);
   capture.hide();
   // Set Title Text and location of bottom left corner
   let txt = createDiv("How Does My Pet See?");
@@ -47,7 +47,7 @@ function setup() {
 
 function draw() {
   if (currentFilter == 0) {
-    image(capture, 100, 100, 640, 480);
+    image(capture, 100, 100, 960, 720);
   }
   // Dog Filter
   if (currentFilter == 1) {
