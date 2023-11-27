@@ -31,20 +31,20 @@ function setup() {
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.position(150, 850);
-  buttonDog.size(100, 50);
+  buttonDog.position(width / 2 - 400, 700);
+  buttonDog.size(200, 100);
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
-  buttonBird.position(150, 500);
-  buttonBird.size(100, 50);
+  buttonBird.position(width / 2 - 100, 700);
+  buttonBird.size(200, 100);
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
-  buttonFish.position(350, 500);
-  buttonFish.size(100, 50);
+  buttonFish.position(width / 2 + 200, 700);
+  buttonFish.size(200, 100);
   buttonFish.mousePressed(changeFish);
 
   currentFilter = 0;
