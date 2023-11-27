@@ -2,7 +2,7 @@ var capture;
 var currentFilter;
 
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(window.innerWidth, window.innerHeight);
   // Set Color of Background
   clear();
   var constraints = {
@@ -15,7 +15,7 @@ function setup() {
   };
   // Capture Video
   capture = createCapture(constraints);
-  capture.size(960, 720);
+  //capture.size(width / 2, height / 2, 100, 100);
   capture.hide();
   // Set Title Text and location of bottom left corner
   let txt = createDiv("How Does My Pet See?");
@@ -29,29 +29,33 @@ function setup() {
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.position(0, 500);
+  buttonDog.position(150, 850);
+  buttonDog.size(100, 50);
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
   buttonBird.position(150, 500);
+  buttonBird.size(100, 50);
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
   buttonFish.position(350, 500);
+  buttonFish.size(100, 50);
   buttonFish.mousePressed(changeFish);
 
   currentFilter = 0;
 }
 
 function draw() {
+  imageMode(CENTER);
   if (currentFilter == 0) {
-    image(capture, 100, 100, 960, 720);
+    image(capture, width / 2, height / 2);
   }
   // Dog Filter
   if (currentFilter == 1) {
-    image(capture, 100, 100, 320, 240);
+    image(capture, width / 2, height / 2);
     loadPixels();
     for (var y = 0; y < height * 3; y++) {
       for (var x = 0; x < width; x++) {
@@ -71,7 +75,7 @@ function draw() {
     updatePixels();
     // Bird Filter
   } else if (currentFilter == 2) {
-    image(capture, 100, 100, 320, 240);
+    image(capture, width / 2, height / 2);
     loadPixels();
     for (var y = 0; y < height * 3; y++) {
       for (var x = 0; x < width; x++) {
