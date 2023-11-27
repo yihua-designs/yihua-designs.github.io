@@ -23,36 +23,36 @@ function setup() {
   let txt = createDiv("How Does My Pet See?");
   txt.style("font-size", "48px");
   var textbody = txt.width / 8;
-  txt.position(width / 2 - textbody, 50);
+  txt.position(width / 2 - textbody, 25);
   console.log(txt.width);
 
   // Create Reset button
   buttonReset = createButton("Back to Beginning");
   // Set Reset button bottom left corner
   buttonReset.size(300, 50);
-  buttonReset.position(width / 2 - 150, 150);
+  buttonReset.position(width / 2 - 150, 100);
   buttonReset.style("font-size", "18px");
   // Set what happens when you press reset button
   buttonReset.mousePressed(changeBack);
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.position(width / 2 - 400, height / 2 + 300);
-  buttonDog.size(200, 100);
+  buttonDog.position(width / 2 - 400, height / 2 + 350);
+  buttonDog.size(200, 75);
   buttonDog.style("font-size", "24px");
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
-  buttonBird.size(200, 100);
-  buttonBird.position(width / 2 - 100, height / 2 + 300);
+  buttonBird.size(200, 75);
+  buttonBird.position(width / 2 - 100, height / 2 + 350);
   buttonBird.style("font-size", "24px");
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
-  buttonFish.position(width / 2 + 200, height / 2 + 300);
-  buttonFish.size(200, 100);
+  buttonFish.position(width / 2 + 200, height / 2 + 350);
+  buttonFish.size(200, 75);
   buttonFish.style("font-size", "24px");
   buttonFish.mousePressed(changeFish);
 
