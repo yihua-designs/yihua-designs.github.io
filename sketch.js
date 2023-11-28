@@ -62,13 +62,14 @@ function setup() {
 function draw() {
   imageMode(CENTER);
   if (currentFilter == 0) {
-    image(capture, width / 2, height / 2);
+    image(capture, width / 1.65, height / 1.5);
   }
   // Dog Filter
   if (currentFilter == 1) {
-    image(capture, width / 2, height / 2);
+    image(capture, width / 1.65, height / 1.5);
+    filter(BLUR, 3);
     loadPixels();
-    for (var y = 0; y < height * 3; y++) {
+    for (var y = 0; y < height * 4; y++) {
       for (var x = 0; x < width; x++) {
         var index = (x + y * width) * 4;
         var r = pixels[index + 0];
@@ -76,19 +77,23 @@ function draw() {
         var b = pixels[index + 2];
         var a = pixels[index + 3];
 
-        var bw = (r + g + b) / 3;
+        var tr = r * 0.32 + g * 0.85 + b * 0.01;
+        var tg = r * 0.25 + g * 0.68 + b * 0.07;
+        var tb = r * 0.01 + g * 0.01 + b * 0.9;
+        var a = pixels[index + 3];
 
-        pixels[index + 0] = bw;
-        pixels[index + 1] = bw;
-        pixels[index + 2] = bw;
+        pixels[index + 0] = tr;
+        pixels[index + 1] = tg;
+        pixels[index + 2] = tb;
+        pixels[index + 3] = a * 0.85;
       }
     }
     updatePixels();
     // Bird Filter
   } else if (currentFilter == 2) {
-    image(capture, width / 2, height / 2);
+    image(capture, width / 1.65, height / 1.5);
     loadPixels();
-    for (var y = 0; y < height * 3; y++) {
+    for (var y = 0; y < height * 4; y++) {
       for (var x = 0; x < width; x++) {
         var index = (x + y * width) * 4;
         var r = pixels[index + 0];
@@ -96,10 +101,14 @@ function draw() {
         var b = pixels[index + 2];
         var a = pixels[index + 3];
 
-        pixels[index + 0] = r;
-        pixels[index + 1] = g;
-        pixels[index + 2] = b;
-        pixels[index + 3] = a * 0.5;
+        var tr = r * 1 + g * 0.1 + b * 0.2;
+        var tg = r * 0.1 + g * 0.9 + b * 0.1;
+        var tb = r * 0.25 + g * 0.25 + b * 1;
+
+        pixels[index + 0] = tr - 10;
+        pixels[index + 1] = tg;
+        pixels[index + 2] = tb - 10;
+        pixels[index + 3] = a * 2;
       }
     }
     updatePixels();
