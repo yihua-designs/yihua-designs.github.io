@@ -3,6 +3,7 @@ var currentFilter;
 
 function setup() {
   var canvas = createCanvas(window.innerWidth, window.innerHeight);
+  canvas.id("canvas");
   noStroke();
   // Set Color of Background
   clear();
@@ -94,7 +95,9 @@ function draw() {
     capture.updatePixels();
     image(capture, width / 2, height / 1.5 - capture.height / 8);
     // Blur effect, increase by making the number bigger (causes the screen to move down somewhat)
-    drawingContext.filter = "blur(2px";
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.filter = "blur(4px)";
     // Bird Filter
   } else if (currentFilter == 2) {
     drawingContext.restore();
