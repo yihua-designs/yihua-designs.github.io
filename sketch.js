@@ -16,7 +16,7 @@ function setup() {
     },
   };
   capture = createCapture(constraints);
-  capture.size(width / 1.65, height / 1.5);
+  capture.size(width / 2, height / 1.5);
   capture.hide(capture);
   let details = navigator.userAgent;
   let regexp = /android|iphone|kindle|ipad/i;
