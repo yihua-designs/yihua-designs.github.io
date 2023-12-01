@@ -16,7 +16,7 @@ function setup() {
     },
   };
   capture = createCapture(constraints);
-  capture.size(width / 2, height / 1.5);
+  capture.size(width / 2, height / 1.4);
   capture.hide(capture);
   let details = navigator.userAgent;
   let regexp = /android|iphone|kindle|ipad/i;
@@ -107,7 +107,7 @@ function draw() {
   // Default mode
   if (currentFilter == 0) {
     drawingContext.restore();
-    image(capture, width / 2, height / 1.5 - capture.height / 4);
+    image(capture, width / 2, height / 1.4 - capture.height / 4);
 
     // Dog Filter
   } else if (currentFilter == 1) {
@@ -185,7 +185,7 @@ function draw() {
       capture.pixels[mc + 3] = capture.pixels[lc + 3];
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.5 - capture.height / 4);
+    image(capture, width / 2, height / 1.4 - capture.height / 4);
     // Blur effect, increase by making the number bigger (causes the screen to move down somewhat)
     //var canvas = document.getElementById("canvas");
     //var ctx = canvas.getContext("2d");
@@ -210,7 +210,7 @@ function draw() {
       capture.pixels[index + 3] = a * 2;
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.5 - capture.height / 4);
+    image(capture, width / 2, height / 1.4 - capture.height / 4);
     // Fish Filter
   } else if (currentFilter == 3) {
     drawingContext.restore();
@@ -267,7 +267,7 @@ function draw() {
       capture.pixels[index + 3] = a * 2;
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.5 - capture.height / 4);
+    image(capture, width / 2, height / 1.4 - capture.height / 4);
   }
 }
 
