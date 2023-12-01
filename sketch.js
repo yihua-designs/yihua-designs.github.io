@@ -2,8 +2,7 @@ var capture;
 var currentFilter;
 
 function setup() {
-  var canvas = createCanvas(window.innerWidth, window.innerHeight);
-  canvas.id("canvas");
+  createCanvas(window.innerWidth, window.innerHeight);
   noStroke();
   // Set Color of Background
   clear();
@@ -19,7 +18,6 @@ function setup() {
   capture = createCapture(constraints);
   capture.size(width / 1.65, height / 1.5);
   capture.hide(capture);
-  // Set Title Text and location of bottom left corner
   textSize(48);
   let txt = "How Does My Pet See?";
   text(txt, width / 2 - textWidth(txt) / 2, 25, 600, 100);
@@ -38,7 +36,7 @@ function setup() {
   buttonDog.size(150, 75);
   buttonDog.position(
     width / 2 - capture.width / 3 - buttonDog.width / 2,
-    height / 2 + capture.height / 1.58
+    height / 2 + capture.height / 1.9
   );
   buttonDog.style("font-size", "24px");
   buttonDog.mousePressed(changeDog);
@@ -48,7 +46,7 @@ function setup() {
   buttonBird.size(150, 75);
   buttonBird.position(
     width / 2 - buttonBird.width / 2,
-    height / 2 + capture.height / 1.58
+    height / 2 + capture.height / 1.9
   );
   buttonBird.style("font-size", "24px");
   buttonBird.mousePressed(changeBird);
@@ -58,7 +56,7 @@ function setup() {
   buttonFish.size(150, 75);
   buttonFish.position(
     width / 2 + capture.width / 3 - buttonFish.width / 2,
-    height / 2 + capture.height / 1.58
+    height / 2 + capture.height / 1.9
   );
   buttonFish.style("font-size", "24px");
   buttonFish.mousePressed(changeFish);
@@ -73,10 +71,15 @@ function draw() {
   // Default mode
   if (currentFilter == 0) {
     drawingContext.restore();
-    image(capture, width / 2, height / 1.5 - capture.height / 8);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
 
     // Dog Filter
   } else if (currentFilter == 1) {
+    var k1 = [
+      [1, 2, 1],
+      [2, 4, 2],
+      [1, 2, 1],
+    ];
     capture.loadPixels();
     for (var index = 0; index < capture.pixels.length; index += 4) {
       var r = capture.pixels[index + 0];
@@ -91,13 +94,66 @@ function draw() {
       capture.pixels[index + 1] = tg;
       capture.pixels[index + 2] = tb;
       capture.pixels[index + 3] = a * 0.85;
+
+      var x = index % capture.pixels.length;
+      var y = int(index / capture.pixels.length);
+      var w = capture.width;
+      var h = capture.height;
+
+      var ul = (((x - 1 + w) % w) + w * ((y - 1 + h) % h)) * 4; // location of the UPPER LEFT
+      var uc = (((x - 0 + w) % w) + w * ((y - 1 + h) % h)) * 4; // location of the UPPER CENTER
+      var ur = (((x + 1 + w) % w) + w * ((y - 1 + h) % h)) * 4; // location of the UPPER RIGHT
+      var ml = (((x - 1 + w) % w) + w * ((y + 0 + h) % h)) * 4; // location of the LEFT
+      var mc = (((x - 0 + w) % w) + w * ((y + 0 + h) % h)) * 4; // location of the CENTER PIXEL
+      var mr = (((x + 1 + w) % w) + w * ((y + 0 + h) % h)) * 4; // location of the RIGHT
+      var ll = (((x - 1 + w) % w) + w * ((y + 1 + h) % h)) * 4; // location of the LOWER LEFT
+      var lc = (((x - 0 + w) % w) + w * ((y + 1 + h) % h)) * 4; // location of the LOWER CENTER
+      var lr = (((x + 1 + w) % w) + w * ((y + 1 + h) % h)) * 4; // location of the LOWER RIGHT
+
+      p0 = capture.pixels[ul] * k1[0][0]; // upper left
+      p1 = capture.pixels[uc] * k1[0][1]; // upper mid
+      p2 = capture.pixels[ur] * k1[0][2]; // upper right
+      p3 = capture.pixels[ml] * k1[1][0]; // left
+      p4 = capture.pixels[mc] * k1[1][1]; // center pixel
+      p5 = capture.pixels[mr] * k1[1][2]; // right
+      p6 = capture.pixels[ll] * k1[2][0]; // lower left
+      p7 = capture.pixels[lc] * k1[2][1]; // lower mid
+      p8 = capture.pixels[lr] * k1[2][2]; // lower right
+      var red = (p0 + p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8) / 16;
+
+      p0 = capture.pixels[ul + 1] * k1[0][0]; // upper left
+      p1 = capture.pixels[uc + 1] * k1[0][1]; // upper mid
+      p2 = capture.pixels[ur + 1] * k1[0][2]; // upper right
+      p3 = capture.pixels[ml + 1] * k1[1][0]; // left
+      p4 = capture.pixels[mc + 1] * k1[1][1]; // center pixel
+      p5 = capture.pixels[mr + 1] * k1[1][2]; // right
+      p6 = capture.pixels[ll + 1] * k1[2][0]; // lower left
+      p7 = capture.pixels[lc + 1] * k1[2][1]; // lower mid
+      p8 = capture.pixels[lr + 1] * k1[2][2]; // lower right
+      var green = (p0 + p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8) / 16;
+
+      p0 = capture.pixels[ul + 2] * k1[0][0]; // upper left
+      p1 = capture.pixels[uc + 2] * k1[0][1]; // upper mid
+      p2 = capture.pixels[ur + 2] * k1[0][2]; // upper right
+      p3 = capture.pixels[ml + 2] * k1[1][0]; // left
+      p4 = capture.pixels[mc + 2] * k1[1][1]; // center pixel
+      p5 = capture.pixels[mr + 2] * k1[1][2]; // right
+      p6 = capture.pixels[ll + 2] * k1[2][0]; // lower left
+      p7 = capture.pixels[lc + 2] * k1[2][1]; // lower mid
+      p8 = capture.pixels[lr + 2] * k1[2][2]; // lower right
+      var blue = (p0 + p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8) / 16;
+
+      capture.pixels[mc] = red;
+      capture.pixels[mc + 1] = green;
+      capture.pixels[mc + 2] = blue;
+      capture.pixels[mc + 3] = capture.pixels[lc + 3];
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.5 - capture.height / 8);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
     // Blur effect, increase by making the number bigger (causes the screen to move down somewhat)
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    ctx.filter = "blur(4px)";
+    //var canvas = document.getElementById("canvas");
+    //var ctx = canvas.getContext("2d");
+    //ctx.filter = "blur(4px)";
     // Bird Filter
   } else if (currentFilter == 2) {
     drawingContext.restore();
@@ -118,7 +174,7 @@ function draw() {
       capture.pixels[index + 3] = a * 2;
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.5 - capture.height / 8);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
     // Fish Filter
   } else if (currentFilter == 3) {
     drawingContext.restore();
@@ -175,7 +231,7 @@ function draw() {
       capture.pixels[index + 3] = a * 2;
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.5 - capture.height / 8);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
   }
 }
 
