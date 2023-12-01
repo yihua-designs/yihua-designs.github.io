@@ -19,17 +19,16 @@ function setup() {
   capture.size(width / 1.65, height / 1.5);
   capture.hide(capture);
   // Set Title Text and location of bottom left corner
-  txt = createDiv("How Does My Pet See?");
-  var textBody = txt.width / 14;
-  txt.position(width / 2 - textBody, 25);
-  txt.style("font-size", "48px");
+  textSize(48);
+  let txt = "How Does My Pet See?";
+  text(txt, width / 2 - textWidth(txt) / 2, 25, 600, 100);
 
   // Create Reset button
   buttonReset = createButton("Back to Beginning");
-  // Set Reset button bottom left corner
-  var buttonBody = buttonReset.width / 8;
-  buttonReset.position(width / 2 - buttonBody, 100);
   buttonReset.style("font-size", "18px");
+  // Set Reset button bottom left corner
+  var buttonBody = buttonReset.width / 2;
+  buttonReset.position(width / 2 - buttonBody, 100);
   // Set what happens when you press reset button
   buttonReset.mousePressed(changeBack);
 
