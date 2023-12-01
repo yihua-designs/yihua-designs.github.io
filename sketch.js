@@ -25,16 +25,16 @@ function setup() {
 
   // Create Reset button
   buttonReset = createButton("Back to Beginning");
-  buttonReset.style("font-size", "18px");
   // Set Reset button bottom left corner
   var buttonBody = buttonReset.width / 2;
   buttonReset.position(width / 2 - buttonBody, 100);
   // Set what happens when you press reset button
+  buttonReset.style("font-size", "18px");
   buttonReset.mousePressed(changeBack);
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.size(190, 75);
+  buttonDog.size(150, 75);
   buttonDog.position(
     width / 2 - capture.width / 3 - buttonDog.width / 2,
     height / 2 + capture.height / 1.58
@@ -44,7 +44,7 @@ function setup() {
 
   // Create Bird button
   buttonBird = createButton("BIRD");
-  buttonBird.size(190, 75);
+  buttonBird.size(150, 75);
   buttonBird.position(
     width / 2 - buttonBird.width / 2,
     height / 2 + capture.height / 1.58
@@ -54,7 +54,7 @@ function setup() {
 
   // Create Fish button
   buttonFish = createButton("FISH");
-  buttonFish.size(190, 75);
+  buttonFish.size(150, 75);
   buttonFish.position(
     width / 2 + capture.width / 3 - buttonFish.width / 2,
     height / 2 + capture.height / 1.58
