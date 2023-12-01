@@ -2,9 +2,11 @@ var capture;
 var currentFilter;
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  var canvas = createCanvas(window.innerWidth, window.innerHeight);
+  noStroke();
   // Set Color of Background
   clear();
+  // Capture Video
   var constraints = {
     audio: false,
     video: {
@@ -13,46 +15,51 @@ function setup() {
       },
     },
   };
-  // Capture Video
   capture = createCapture(constraints);
   capture.size(width / 1.65, height / 1.5);
-  console.log(capture.width);
-  console.log(capture.height);
-  capture.hide();
+  capture.hide(capture);
   // Set Title Text and location of bottom left corner
-  let txt = createDiv("How Does My Pet See?");
+  txt = createDiv("How Does My Pet See?");
+  var textBody = txt.width / 14;
+  txt.position(width / 2 - textBody, 25);
   txt.style("font-size", "48px");
-  var textbody = txt.width / 8;
-  txt.position(width / 2 - textbody, 25);
-  console.log(txt.width);
 
   // Create Reset button
   buttonReset = createButton("Back to Beginning");
   // Set Reset button bottom left corner
-  buttonReset.size(300, 50);
-  buttonReset.position(width / 2 - 150, 100);
+  var buttonBody = buttonReset.width / 8;
+  buttonReset.position(width / 2 - buttonBody, 100);
   buttonReset.style("font-size", "18px");
   // Set what happens when you press reset button
   buttonReset.mousePressed(changeBack);
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.position(width / 2 - 400, height / 2 + 350);
-  buttonDog.size(200, 75);
+  buttonDog.size(190, 75);
+  buttonDog.position(
+    width / 2 - capture.width / 3 - buttonDog.width / 2,
+    height / 2 + capture.height / 1.58
+  );
   buttonDog.style("font-size", "24px");
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
-  buttonBird.size(200, 75);
-  buttonBird.position(width / 2 - 100, height / 2 + 350);
+  buttonBird.size(190, 75);
+  buttonBird.position(
+    width / 2 - buttonBird.width / 2,
+    height / 2 + capture.height / 1.58
+  );
   buttonBird.style("font-size", "24px");
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
-  buttonFish.position(width / 2 + 200, height / 2 + 350);
-  buttonFish.size(200, 75);
+  buttonFish.size(190, 75);
+  buttonFish.position(
+    width / 2 + capture.width / 3 - buttonFish.width / 2,
+    height / 2 + capture.height / 1.58
+  );
   buttonFish.style("font-size", "24px");
   buttonFish.mousePressed(changeFish);
 
@@ -60,89 +67,113 @@ function setup() {
 }
 
 function draw() {
+  // Set image location to start from Center
   imageMode(CENTER);
+
+  // Default mode
   if (currentFilter == 0) {
-    image(capture, width / 1.65, height / 1.5);
-  }
-  // Dog Filter
-  if (currentFilter == 1) {
-    image(capture, width / 1.65, height / 1.5);
-    filter(BLUR, 3);
-    loadPixels();
-    for (var y = 0; y < height * 4; y++) {
-      for (var x = 0; x < width; x++) {
-        var index = (x + y * width) * 4;
-        var r = pixels[index + 0];
-        var g = pixels[index + 1];
-        var b = pixels[index + 2];
-        var a = pixels[index + 3];
+    drawingContext.restore();
+    image(capture, width / 2, height / 1.5 - capture.height / 8);
 
-        var tr = r * 0.32 + g * 0.85 + b * 0.01;
-        var tg = r * 0.25 + g * 0.68 + b * 0.07;
-        var tb = r * 0.01 + g * 0.01 + b * 0.9;
-        var a = pixels[index + 3];
+    // Dog Filter
+  } else if (currentFilter == 1) {
+    capture.loadPixels();
+    for (var index = 0; index < capture.pixels.length; index += 4) {
+      var r = capture.pixels[index + 0];
+      var g = capture.pixels[index + 1];
+      var b = capture.pixels[index + 2];
+      var a = capture.pixels[index + 3];
 
-        pixels[index + 0] = tr;
-        pixels[index + 1] = tg;
-        pixels[index + 2] = tb;
-        pixels[index + 3] = a * 0.85;
-      }
+      var tr = r * 0.32 + g * 0.85 + b * 0.01;
+      var tg = r * 0.25 + g * 0.68 + b * 0.07;
+      var tb = r * 0.01 + g * 0.01 + b * 0.9;
+      capture.pixels[index + 0] = tr;
+      capture.pixels[index + 1] = tg;
+      capture.pixels[index + 2] = tb;
+      capture.pixels[index + 3] = a * 0.85;
     }
-    updatePixels();
+    capture.updatePixels();
+    image(capture, width / 2, height / 1.5 - capture.height / 8);
+    // Blur effect, increase by making the number bigger (causes the screen to move down somewhat)
+    drawingContext.filter = "blur(2px";
     // Bird Filter
   } else if (currentFilter == 2) {
-    image(capture, width / 1.65, height / 1.5);
-    loadPixels();
-    for (var y = 0; y < height * 4; y++) {
-      for (var x = 0; x < width; x++) {
-        var index = (x + y * width) * 4;
-        var r = pixels[index + 0];
-        var g = pixels[index + 1];
-        var b = pixels[index + 2];
-        var a = pixels[index + 3];
+    drawingContext.restore();
+    capture.loadPixels();
+    for (var index = 0; index < capture.pixels.length; index += 4) {
+      var r = capture.pixels[index + 0];
+      var g = capture.pixels[index + 1];
+      var b = capture.pixels[index + 2];
+      var a = capture.pixels[index + 3];
 
-        var tr = r * 1 + g * 0.1 + b * 0.2;
-        var tg = r * 0.1 + g * 0.9 + b * 0.1;
-        var tb = r * 0.25 + g * 0.25 + b * 1;
+      var tr = r * 1 + g * 0.1 + b * 0.2;
+      var tg = r * 0.1 + g * 0.9 + b * 0.1;
+      var tb = r * 0.25 + g * 0.25 + b * 1;
 
-        pixels[index + 0] = tr - 10;
-        pixels[index + 1] = tg;
-        pixels[index + 2] = tb - 10;
-        pixels[index + 3] = a * 2;
-      }
+      capture.pixels[index + 0] = tr - 10;
+      capture.pixels[index + 1] = tg;
+      capture.pixels[index + 2] = tb - 10;
+      capture.pixels[index + 3] = a * 2;
     }
-    updatePixels();
+    capture.updatePixels();
+    image(capture, width / 2, height / 1.5 - capture.height / 8);
     // Fish Filter
   } else if (currentFilter == 3) {
-    let img = capture.get();
-    loadPixels();
-    let x = 225;
-    let y = 200;
-    var lsize = 50,
-      lsize2 = lsize * lsize;
-    var mag = 2.0;
-    var k = -0.00016;
+    drawingContext.restore();
+    capture.loadPixels();
+    // Set the Offset, without this it makes the lens in the top left corner
+    let x = int(capture.width / 2);
+    let y = int(capture.height * 1.2);
+    // Size of the lens
+    var lSize = int(sqrt(capture.width * capture.height * 1.5)),
+      lSize2 = lSize * lSize;
+    // Magnification amount
+    var mag = 1.0;
+    // Controls the amount of distortion
+    var k = 0.000001;
     var u, v, r2;
-    for (var vd = -lsize; vd < lsize; vd++) {
-      for (var ud = -lsize; ud < lsize; ud++) {
+    // This creates the Lens
+    for (var vd = -lSize; vd < lSize; vd++) {
+      for (var ud = -lSize; ud < lSize; ud++) {
         r2 = ud * ud + vd * vd;
-        if (r2 <= lsize2) {
+        if (r2 <= lSize2) {
           var f = mag + k * r2;
           u = floor(ud / f) + x;
           v = floor(vd / f) + y;
           var px = ud + x;
           var py = vd + y;
           if (px >= 0 && px < width && py >= 0 && py < height) {
-            if (u >= 0 && u < img.width && v >= 0 && v < img.height) {
-              set(ud + x, vd + y, img.get(u, v));
-            } else {
-              set(ud + x, vd + y);
+            if (u >= 0 && u < capture.width && v >= 0 && v < capture.height) {
+              // Convert where the lens currently is on the video to a pixels[] index, multiply by 4 to cover the whole video
+              let index = (px + capture.width * py) * 4;
+              // Convert what the lens wants to be to a pixels[] index, must multiply by 4 or you get static
+              let temp = (u + capture.width * v) * 4;
+              capture.pixels[index + 0] = capture.pixels[temp + 0];
+              capture.pixels[index + 1] = capture.pixels[temp + 1];
+              capture.pixels[index + 2] = capture.pixels[temp + 2];
+              capture.pixels[index + 3] = capture.pixels[temp + 3];
             }
           }
         }
       }
     }
-    updatePixels();
+    for (var index = 0; index < capture.pixels.length; index += 4) {
+      var r = capture.pixels[index + 0];
+      var g = capture.pixels[index + 1];
+      var b = capture.pixels[index + 2];
+      var a = capture.pixels[index + 3];
+
+      var tr = r * 1 + g * 0.1 + b * 0.2;
+      var tg = r * 0.1 + g * 0.9 + b * 0.1;
+      var tb = r * 0.25 + g * 0.25 + b * 1;
+
+      capture.pixels[index + 0] = tr - 10;
+      capture.pixels[index + 1] = tg;
+      capture.pixels[index + 2] = tb - 10;
+      capture.pixels[index + 3] = a * 2;
+    }
+    capture.updatePixels();
+    image(capture, width / 2, height / 1.5 - capture.height / 8);
   }
 }
 
