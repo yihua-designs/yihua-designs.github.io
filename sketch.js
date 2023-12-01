@@ -18,7 +18,15 @@ function setup() {
   capture = createCapture(constraints);
   capture.size(width / 1.65, height / 1.5);
   capture.hide(capture);
-  textSize(48);
+  let details = navigator.userAgent;
+  let regexp = /android|iphone|kindle|ipad/i;
+  var isMobileDevice = regexp.test(details);
+  // Set Title Text and location of bottom left corner
+  if (isMobileDevice) {
+    textSize(24);
+  } else {
+    textSize(48);
+  }
   let txt = "How Does My Pet See?";
   text(txt, width / 2 - textWidth(txt) / 2, 25, 600, 100);
 
@@ -27,38 +35,66 @@ function setup() {
   // Set Reset button bottom left corner
   var buttonBody = buttonReset.width / 2;
   buttonReset.position(width / 2 - buttonBody, 100);
+  if (isMobileDevice) {
+    buttonReset.style("font-size", "12px");
+  } else {
+    buttonReset.style("font-size", "18px");
+  }
   // Set what happens when you press reset button
-  buttonReset.style("font-size", "18px");
   buttonReset.mousePressed(changeBack);
 
   // Create Dog button
   buttonDog = createButton("DOG");
-  buttonDog.size(150, 75);
+  if (isMobileDevice) {
+    buttonDog.size(75, 25);
+  } else {
+    buttonDog.size(150, 75);
+  }
   buttonDog.position(
     width / 2 - capture.width / 3 - buttonDog.width / 2,
     height / 2 + capture.height / 1.9
   );
-  buttonDog.style("font-size", "24px");
+  if (isMobileDevice) {
+    buttonDog.style("font-size", "12px");
+  } else {
+    buttonDog.style("font-size", "24px");
+  }
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
-  buttonBird.size(150, 75);
+  if (isMobileDevice) {
+    buttonBird.size(75, 25);
+  } else {
+    buttonBird.size(150, 75);
+  }
   buttonBird.position(
     width / 2 - buttonBird.width / 2,
     height / 2 + capture.height / 1.9
   );
-  buttonBird.style("font-size", "24px");
+  if (isMobileDevice) {
+    buttonBird.style("font-size", "12px");
+  } else {
+    buttonBird.style("font-size", "24px");
+  }
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
-  buttonFish.size(150, 75);
+  if (isMobileDevice) {
+    buttonFish.size(75, 25);
+  } else {
+    buttonFish.size(150, 75);
+  }
   buttonFish.position(
     width / 2 + capture.width / 3 - buttonFish.width / 2,
     height / 2 + capture.height / 1.9
   );
-  buttonFish.style("font-size", "24px");
+  if (isMobileDevice) {
+    buttonFish.style("font-size", "12px");
+  } else {
+    buttonFish.style("font-size", "24px");
+  }
   buttonFish.mousePressed(changeFish);
 
   currentFilter = 0;
