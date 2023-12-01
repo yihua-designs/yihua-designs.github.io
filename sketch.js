@@ -16,7 +16,7 @@ function setup() {
     },
   };
   capture = createCapture(constraints);
-  capture.size(width / 2, height / 1.4);
+  capture.size(width / 2, height / 1.5);
   capture.hide(capture);
   let details = navigator.userAgent;
   let regexp = /android|iphone|kindle|ipad/i;
@@ -46,54 +46,54 @@ function setup() {
   // Create Dog button
   buttonDog = createButton("DOG");
   if (isMobileDevice) {
-    buttonDog.size(75, 25);
+    buttonDog.size(55, 25);
   } else {
-    buttonDog.size(150, 75);
+    buttonDog.size(115, 70);
   }
   buttonDog.position(
     width / 2 - capture.width / 3 - buttonDog.width / 2,
-    height / 2 + capture.height / 1.9
+    height / 2 + capture.height / 1.8
   );
   if (isMobileDevice) {
-    buttonDog.style("font-size", "12px");
+    buttonDog.style("font-size", "10px");
   } else {
-    buttonDog.style("font-size", "24px");
+    buttonDog.style("font-size", "20px");
   }
   buttonDog.mousePressed(changeDog);
 
   // Create Bird button
   buttonBird = createButton("BIRD");
   if (isMobileDevice) {
-    buttonBird.size(75, 25);
+    buttonBird.size(55, 25);
   } else {
-    buttonBird.size(150, 75);
+    buttonBird.size(115, 70);
   }
   buttonBird.position(
     width / 2 - buttonBird.width / 2,
-    height / 2 + capture.height / 1.9
+    height / 2 + capture.height / 1.8
   );
   if (isMobileDevice) {
-    buttonBird.style("font-size", "12px");
+    buttonBird.style("font-size", "10px");
   } else {
-    buttonBird.style("font-size", "24px");
+    buttonBird.style("font-size", "20px");
   }
   buttonBird.mousePressed(changeBird);
 
   // Create Fish button
   buttonFish = createButton("FISH");
   if (isMobileDevice) {
-    buttonFish.size(75, 25);
+    buttonFish.size(55, 25);
   } else {
-    buttonFish.size(150, 75);
+    buttonFish.size(115, 70);
   }
   buttonFish.position(
     width / 2 + capture.width / 3 - buttonFish.width / 2,
-    height / 2 + capture.height / 1.9
+    height / 2 + capture.height / 1.8
   );
   if (isMobileDevice) {
-    buttonFish.style("font-size", "12px");
+    buttonFish.style("font-size", "10px");
   } else {
-    buttonFish.style("font-size", "24px");
+    buttonFish.style("font-size", "20px");
   }
   buttonFish.mousePressed(changeFish);
 
@@ -107,7 +107,7 @@ function draw() {
   // Default mode
   if (currentFilter == 0) {
     drawingContext.restore();
-    image(capture, width / 2, height / 1.4 - capture.height / 4);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
 
     // Dog Filter
   } else if (currentFilter == 1) {
@@ -185,7 +185,7 @@ function draw() {
       capture.pixels[mc + 3] = capture.pixels[lc + 3];
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.4 - capture.height / 4);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
     // Blur effect, increase by making the number bigger (causes the screen to move down somewhat)
     //var canvas = document.getElementById("canvas");
     //var ctx = canvas.getContext("2d");
@@ -210,7 +210,7 @@ function draw() {
       capture.pixels[index + 3] = a * 2;
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.4 - capture.height / 4);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
     // Fish Filter
   } else if (currentFilter == 3) {
     drawingContext.restore();
@@ -267,7 +267,7 @@ function draw() {
       capture.pixels[index + 3] = a * 2;
     }
     capture.updatePixels();
-    image(capture, width / 2, height / 1.4 - capture.height / 4);
+    image(capture, width / 2, height / 1.5 - capture.height / 4);
   }
 }
 
